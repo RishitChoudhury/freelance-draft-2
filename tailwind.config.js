@@ -22,9 +22,9 @@ export default {
         'light-cyan': '#0088cc',
       },
       fontFamily: {
-        sans: ['"Inter Tight"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
-        serif: ['"Playfair Display"', 'serif'],
+        sans: ['"Manrope"', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'monospace'],
+        serif: ['"Cormorant Garamond"', 'serif'],
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

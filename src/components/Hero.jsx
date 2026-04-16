@@ -1,119 +1,52 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
+import LiquidMetalGlobe from './LiquidMetalGlobe';
 
-const MagneticButton = ({ children }) => {
-  const ref = useRef(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const handleMouse = (e) => {
-    const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
-    // Magnetic pull dampening factor
-    setPosition({ x: middleX * 0.3, y: middleY * 0.3 });
-  };
-
-  const reset = () => {
-    setPosition({ x: 0, y: 0 });
-  };
-
+const Hero = () => {
   return (
-    <motion.button
-      ref={ref}
-      onMouseMove={handleMouse}
-      onMouseLeave={reset}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
-      className="relative overflow-hidden border border-dark-text dark:border-stark-white bg-transparent px-8 py-4 font-mono text-sm uppercase tracking-widest group pointer-events-auto"
-      data-cursor-interactive
-    >
-      <span className="relative z-10 block text-dark-text dark:text-stark-white transition-colors duration-500 ease-out group-hover:text-light-bg dark:group-hover:text-void-black font-semibold">
-        {children}
-      </span>
-      {/* Sweeping background snap fill */}
-      <div className="absolute inset-0 z-0 bg-dark-text dark:bg-stark-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] origin-left" />
-    </motion.button>
-  );
-};
-
-const Hero = ({ booted }) => {
-  const headline = "Revolutionize Your Business with AI Excellence";
-  const words = headline.split(" ");
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.1,
-        delayChildren: 0.8 // Wait for boot up delay and badge reveal
-      }
-    }
-  };
-
-  const wordVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { ease: [0.33, 1, 0.68, 1], duration: 0.6 }
-    }
-  };
-
-  return (
-    <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-5xl mx-auto w-full min-h-screen pt-32 pb-40">
-      {/* Eyebrow Badge */}
+    <section id="miosa" className="relative mx-auto max-w-6xl px-6 pb-28 pt-24 text-center md:px-8 md:pt-28">
       <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={booted ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
-        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-dark-text/20 dark:border-stark-white/20 bg-light-bg/50 dark:bg-void-black/50 backdrop-blur-md mb-8 mt-12 pointer-events-auto"
+        layoutId="lancemart-liquid-globe"
+        transition={{ type: 'spring', stiffness: 115, damping: 22 }}
+        className="mx-auto mb-10 w-fit"
       >
-        <span className="animate-pulse-slow text-luminous-radium">✨</span>
-        <span className="font-mono text-xs md:text-sm uppercase tracking-wide text-dark-text dark:text-stark-white">AI-Powered Business Transformation</span>
+        <LiquidMetalGlobe className="h-44 w-44 md:h-52 md:w-52 lg:h-64 lg:w-64" spinSpeed={0.22} />
       </motion.div>
 
-      {/* Main Headline */}
-      <motion.h1 
-        className="font-sans font-bold text-[clamp(2.5rem,8vw,5.5rem)] leading-[1.1] tracking-tight mb-8"
-        variants={containerVariants}
-        initial="hidden"
-        animate={booted ? "visible" : "hidden"}
-      >
-        {words.map((word, i) => {
-          const isAIExcellence = word === "AI" || word === "Excellence";
-          return (
-            <span key={i} className="inline-block overflow-hidden pb-3 mr-[0.25em]">
-              <motion.span 
-                variants={wordVariants}
-                className={isAIExcellence ? "text-shimmer font-extrabold" : "text-dark-text dark:text-stark-white"}
-                style={{ display: "inline-block" }}
-              >
-                {word}
-              </motion.span>
-            </span>
-          )
-        })}
-      </motion.h1>
-
-      {/* Subheadline */}
-      <motion.p
-        initial={{ y: 20, opacity: 0 }}
-        animate={booted ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-        transition={{ duration: 0.8, delay: 1.4 }}
-        className="font-mono text-dark-ash dark:text-muted-ash max-w-2xl mx-auto mb-16 leading-relaxed flex flex-wrap justify-center pointer-events-auto"
-      >
-        LanceMart AI delivers cutting-edge agentic automation and strategic AI consultancy to transform your operations and unlock unprecedented growth.
-      </motion.p>
-
-      {/* Call to Action */}
       <motion.div
         initial={{ y: 20, opacity: 0 }}
-        animate={booted ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-        transition={{ duration: 0.8, delay: 1.6, ease: "easeOut" }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.75, delay: 0.18 }}
+        className="space-y-7"
       >
-        <MagneticButton>Initialize System</MagneticButton>
+        <p className="font-mono text-[0.68rem] uppercase tracking-[0.32em] text-dark-ash md:text-sm lg:text-[0.78rem]">LANCEMART AI</p>
+        <h1 className="text-[clamp(2.45rem,8.6vw,6.25rem)] font-extrabold leading-[0.94] tracking-tight text-dark-text lg:text-[clamp(3.2rem,5.4vw,5rem)]">
+          Lancemart <span className="font-serif text-[0.95em] font-semibold italic tracking-normal">AI</span>
+        </h1>
+        <h2 className="font-mono text-[0.82rem] uppercase tracking-[0.22em] text-dark-ash md:text-[1.05rem] lg:text-[0.92rem]">Signal Through the Noise</h2>
+        <p className="mx-auto max-w-3xl text-[1.22rem] leading-relaxed text-dark-ash md:text-[2.15rem] md:leading-relaxed lg:text-[1.7rem]">
+          The architecture for building businesses where humans and AI agents collaborate clearly, efficiently, and without wasted effort.
+        </p>
+      </motion.div>
+
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.75, delay: 0.25 }}
+        className="mt-11 flex flex-wrap items-center justify-center gap-4"
+      >
+        <a
+          href="#how-it-works"
+          className="inline-flex rounded-full bg-dark-text px-8 py-3.5 text-sm font-medium text-stark-white shadow-[0_10px_25px_rgba(17,17,17,0.28)] transition-transform duration-200 hover:-translate-y-0.5 md:text-base lg:text-[0.92rem]"
+        >
+          How It Works
+        </a>
+        <a
+          href="#framework"
+          className="inline-flex rounded-full border border-dark-text/20 bg-light-bg px-8 py-3.5 text-sm font-medium text-dark-text transition-colors duration-200 hover:bg-dark-text/5 md:text-base lg:text-[0.92rem]"
+        >
+          Read the Paper
+        </a>
       </motion.div>
     </section>
   );
