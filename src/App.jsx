@@ -10,6 +10,9 @@ import LoaderGlobe from './components/LoaderGlobe';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [minDurationDone, setMinDurationDone] = useState(false);
+  const [loaderMediaReady, setLoaderMediaReady] = useState(false);
+  const [loaderTimeoutReached, setLoaderTimeoutReached] = useState(false);
   const [isFloatingArrowEnabled, setIsFloatingArrowEnabled] = useState(false);
   const [isFloatingArrowVisible, setIsFloatingArrowVisible] = useState(false);
   const [isDark, setIsDark] = useState(() => {
@@ -22,16 +25,29 @@ function App() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+    const minDurationTimer = setTimeout(() => {
+      setMinDurationDone(true);
+    }, 1800);
 
-    return () => clearTimeout(timer);
+    const maxDurationTimer = setTimeout(() => {
+      setLoaderTimeoutReached(true);
+    }, 4200);
+
+    return () => {
+      clearTimeout(minDurationTimer);
+      clearTimeout(maxDurationTimer);
+    };
   }, []);
 
   useEffect(() => {
     localStorage.setItem('lancemart-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
+
+  useEffect(() => {
+    if (loaderTimeoutReached || (minDurationDone && loaderMediaReady)) {
+      setIsLoading(false);
+    }
+  }, [loaderTimeoutReached, minDurationDone, loaderMediaReady]);
 
   useEffect(() => {
     const updateViewport = () => {
@@ -107,7 +123,13 @@ function App() {
         )}
 
         <AnimatePresence>
-          {isLoading && <LoaderGlobe key="loader" />}
+          {isLoading && (
+            <LoaderGlobe
+              key="loader"
+              onMediaReady={() => setLoaderMediaReady(true)}
+              onMediaError={() => setLoaderMediaReady(true)}
+            />
+          )}
         </AnimatePresence>
       </LayoutGroup>
     </main>

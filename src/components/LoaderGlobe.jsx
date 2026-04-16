@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import LiquidMetalGlobe from './LiquidMetalGlobe';
 
-const LoaderGlobe = () => {
+const LoaderGlobe = ({ onMediaReady, onMediaError }) => {
   return (
     <motion.div
       className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-black"
@@ -11,7 +11,7 @@ const LoaderGlobe = () => {
       aria-hidden="true"
     >
       <motion.div layoutId="lancemart-liquid-globe" transition={{ type: 'spring', stiffness: 115, damping: 22 }}>
-        <LiquidMetalGlobe className="h-80 w-80" spinSpeed={0.28} />
+        <LiquidMetalGlobe className="h-80 w-80" spinSpeed={0.28} onMediaReady={onMediaReady} onMediaError={onMediaError} />
       </motion.div>
 
       <motion.p
