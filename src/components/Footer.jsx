@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Download, ExternalLink } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -59,24 +59,8 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 border-t border-dark-text/10 pt-7">
-          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center">
             <p className="text-[0.98rem] text-dark-ash lg:text-[0.94rem]">© 2026 Lancemart AI. All rights reserved.</p>
-            <div className="flex items-center gap-4">
-              <a
-                href="#framework"
-                className="inline-flex items-center gap-2 rounded-full bg-dark-text px-5 py-2.5 text-[0.95rem] font-medium text-stark-white shadow-[0_10px_28px_rgba(17,17,17,0.25)] transition-transform hover:-translate-y-0.5 lg:text-[0.92rem]"
-              >
-                <Download className="h-4 w-4" />
-                Read the Paper
-              </a>
-              <a
-                href="#miosa"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-dark-text text-stark-white shadow-[0_10px_28px_rgba(17,17,17,0.25)] transition-transform hover:-translate-y-0.5"
-                aria-label="Back to top"
-              >
-                <ArrowUp className="h-5 w-5" />
-              </a>
-            </div>
           </div>
         </div>
       </div>

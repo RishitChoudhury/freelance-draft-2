@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { ArrowUp } from 'lucide-react';
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import Metrics from './components/Metrics';
@@ -9,6 +10,8 @@ import LoaderGlobe from './components/LoaderGlobe';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isFloatingArrowEnabled, setIsFloatingArrowEnabled] = useState(false);
+  const [isFloatingArrowVisible, setIsFloatingArrowVisible] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem('lancemart-theme');
     return saved ? saved === 'dark' : false;
@@ -30,6 +33,48 @@ function App() {
     localStorage.setItem('lancemart-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
+  useEffect(() => {
+    const updateViewport = () => {
+      setIsFloatingArrowEnabled(window.innerWidth < 1536);
+    };
+
+    updateViewport();
+    window.addEventListener('resize', updateViewport);
+    return () => window.removeEventListener('resize', updateViewport);
+  }, []);
+
+  useEffect(() => {
+    if (!isFloatingArrowEnabled) {
+      setIsFloatingArrowVisible(false);
+      return;
+    }
+
+    const updateVisibility = () => {
+      const width = window.innerWidth;
+
+      if (width < 768) {
+        const heroSection = document.getElementById('miosa');
+        if (!heroSection) {
+          setIsFloatingArrowVisible(window.scrollY > 320);
+          return;
+        }
+        const heroEnd = heroSection.offsetTop + heroSection.offsetHeight - 100;
+        setIsFloatingArrowVisible(window.scrollY > heroEnd);
+        return;
+      }
+
+      setIsFloatingArrowVisible(true);
+    };
+
+    updateVisibility();
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('resize', updateVisibility);
+    return () => {
+      window.removeEventListener('scroll', updateVisibility);
+      window.removeEventListener('resize', updateVisibility);
+    };
+  }, [isFloatingArrowEnabled]);
+
   return (
     <main className={`relative w-full min-h-screen ${isDark ? 'bg-[#050505] text-zinc-100 theme-dark' : 'bg-light-bg text-dark-text'}`}>
       <LayoutGroup id="loader-to-hero">
@@ -50,6 +95,16 @@ function App() {
             <Footer />
           </div>
         </motion.div>
+
+        {!isLoading && isFloatingArrowEnabled && isFloatingArrowVisible && (
+          <a
+            href="#miosa"
+            className="fixed bottom-6 right-4 z-40 inline-flex h-11 w-11 items-center justify-center rounded-full bg-dark-text text-stark-white shadow-[0_10px_28px_rgba(17,17,17,0.25)] transition-transform hover:-translate-y-0.5 sm:right-6 md:bottom-7 md:right-7 md:h-12 md:w-12"
+            aria-label="Back to top"
+          >
+            <ArrowUp className="h-5 w-5" />
+          </a>
+        )}
 
         <AnimatePresence>
           {isLoading && <LoaderGlobe key="loader" />}
