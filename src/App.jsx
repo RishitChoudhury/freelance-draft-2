@@ -66,20 +66,13 @@ function App() {
     }
 
     const updateVisibility = () => {
-      const width = window.innerWidth;
-
-      if (width < 768) {
-        const heroSection = document.getElementById('miosa');
-        if (!heroSection) {
-          setIsFloatingArrowVisible(window.scrollY > 320);
-          return;
-        }
-        const heroEnd = heroSection.offsetTop + heroSection.offsetHeight - 100;
-        setIsFloatingArrowVisible(window.scrollY > heroEnd);
+      const heroSection = document.getElementById('miosa');
+      if (!heroSection) {
+        setIsFloatingArrowVisible(window.scrollY > 320);
         return;
       }
-
-      setIsFloatingArrowVisible(true);
+      const heroEnd = heroSection.offsetTop + heroSection.offsetHeight - 100;
+      setIsFloatingArrowVisible(window.scrollY > heroEnd);
     };
 
     updateVisibility();
